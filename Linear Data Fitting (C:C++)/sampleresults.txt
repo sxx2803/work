@@ -1,0 +1,35 @@
+C followed by C++ program:
+The line is: Y = 0.932013 * X + 1.49717 
+There were 31080 points in the data set. 
+The line is: Y = 0.932013 * X + 1.49717
+There were 31080 points in the data set.
+C followed by C++ program:
+The line is: Y = 0.932004 * X + 1.49639 
+There were 29446 points in the data set. 
+The line is: Y = 0.932004 * X + 1.49639
+There were 29446 points in the data set.
+C followed by C++ program:
+The line is: Y = 0.932004 * X + 1.49639 
+There were 29446 points in the data set. 
+The line is: Y = 0.932004 * X + 1.49639
+There were 29446 points in the data set.
+C followed by C++ program:
+The line is: Y = 0.932016 * X + 1.49631 
+There were 40058 points in the data set. 
+The line is: Y = 0.932016 * X + 1.49631
+There were 40058 points in the data set.
+C followed by C++ program:
+The line is: Y = 0.932016 * X + 1.49631 
+There were 40058 points in the data set. 
+The line is: Y = 0.932016 * X + 1.49631
+There were 40058 points in the data set.
+C followed by C++ program:
+The line is: Y = 0.932016 * X + 1.49631 
+There were 40058 points in the data set. 
+The line is: Y = 0.932016 * X + 1.49631
+There were 40058 points in the data set.
+C followed by C++ program:
+The line is: Y = 0.932016 * X + 1.49631 
+There were 40058 points in the data set. 
+The line is: Y = 0.932016 * X + 1.49631
+There were 40058 points in the data set.

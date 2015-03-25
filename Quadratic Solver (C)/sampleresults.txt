@@ -1,0 +1,7 @@
+Quadratic Solver, version v1.0e
+Equation to be solved:  1xˆ2 + -2392.2x + 766267 = 0
+The quadratic has real roots:  2011.200000 and 381.000000
+
+Quadratic Solver, version v1.0e
+Equation to be solved:  3xˆ2 + -12x + 8 = 0
+The quadratic has real roots:  3.154701 and 0.845299

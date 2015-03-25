@@ -1,0 +1,21 @@
+* C++ Program
+
+i. Positives:
+	
+	1. The program was easier to read and understand as everything related to LinearFit data was encapsulated in a class called LinearFit. Thus, any members or methods related to LinearFit was grouped together. This is in contrast to the C implementation where the only way to link a struct to a method was to take in the struct as a parameter to that method.
+
+	2. Since the C++ standard template library contains an implementation of the "list" data structure, there was no need to re-implement a dynamic list. Instead, the list can simply be created and used with the right includes. This is in contrast to the C implementation, where the programmer has to either find a data structure library that contains a dynamic "list" structure, or write a dynamic list from nothing. The ease of access to common data structures could have speeded up the development process.
+
+ii. Negatives:
+
+	1. When the C++ implementation was ran in comparison to the C implementation, the C++ implementation was about 3 times slower as timed by the bash timer. This can be attributed to several things. The "list" implementation in the STL might have overhead which could slow the program down when constructing, modifying, and deleting lists. The usage of iterators in contrast to a straight loop with array index access may also introduce overhead that can slow down the performance of the program.
+
+* C Program
+
+i. Positives:
+	
+	1. The C implementation, as timed by the shell timer, in general completes the task faster. The majority of the performance increase can possibly be attributed to the usage of pointers as parameters rather than objects themselves. The simpler implementation of the list data structure also cuts down on potential overhead caused by the list found in the STL. The usage of iterators in the C++ implementation also potentially creates overhead that can slow down performance.
+
+ii. Negatives:
+
+	1. The C program took longer than necessary to write, as not many standard data structures as provided. Thus, in order to use a dynamic list to contain the data points, the C programmer must first write an implementation of the dynamic list structure. The program was also more difficult to follow as functions related to the computation of the linear fit were not necessarily grouped with the structure defined to contain the data. In the C++ implementation, much of the functions were grouped to the LinearFit object by means implementing them as part of the LinearFit class. In the C implementation, the only way to view how methods and structures are related is by looking at the method signature and seeing if the method name or the parameters contains information about its functions and what structures it interacts with.
