@@ -1,0 +1,143 @@
+Analysis
+--------
+
+The included implementation of Gaussian Elimination works as follows:
+
+First, the data input file is parsed and an augmented matrix is created based on the input given. The original matrix, without the augment, can be of any size, whether rectangular or square. Be warned, however, that gaussian elimination might not work on rectangular original matrices, as the majority of rectangular matrices either lead to infinite solutions, or no solutions. In the rare scenario where the rectangular matrix is reduceable to an nxn square matrix, which is possible if one or more rows is a linear combination of the rest of the rows, the included gaussian eliminaiton should be able to solve it.
+
+Next, the lower triangular, the upper triangular, and the permutation matrices are created based on the matrix size specified in the data input file. The main diagonal in the lower triangular matrix is set to 1s, while every other entry in the matrix is set to 0s. Every entry in the upper triangular matrix is set to 0s, and every entry in the permutation matrix is set to 0s to begin with.
+
+After all relevant matrices are initialized, the program gets to using gaussian elimination to attempt to reduce the matrix to a PLU factorization. To start the gaussian elimination process, first the pivotRow is initialized to the first row of the matrix. Next, a pivotVector is created in order to keep track of the row swaps that happen during the course of a gaussian elimination process. Next, the gaussian elimination method iterates through "n-1" times, where n is the number of rows a matrix has. The program then finds the largest pivot in the current column, and swaps the rows to ensure that the largest value is always the pivot. if the pivotRow calculated is not the current row, a swap is then performed between the rows. The pivot is then evaluated and assigned to a variable. Next, the program will scale all entries below the k-th pivot to keep track of the scalings and to create the lower triangular matrix in the process. After all the entries below the k-th pivot have been scaled, the program then zeros all entries below the k-th pivot and to the right of the k-th pivot. This is done by subtracting the pivotRow's entry at that column multiplied by the scale from the original value. After the program finishes the iterative process, the matrix will be in semi-row echlon form, except the pivots will not be 1, and the 0s are replaced by the scalings.
+
+After the iterative process has been completed, the program then creates the L and U matrix based on the final matrix obtained by the gaussian elimination process. Finally, the gaussian elimination function returns the pivotVector for creation of the permutation matrix in another function.
+
+After execution has returned to the main function, the new matrix is then printed for the user to see. However, just because a matrix has been through the gaussian elimination process doesn't mean there's a finite solution for this. Thus, the program must check the matrix to see if it is solvable. If the augmented matrix is nx(n+1) with all non-zero rows, then the matrix is solveable. The program then performs backsubstition to calculate and print the solution. Otherwise, if it is a rectangular matrix with more equations than variables, the program checks to see if the modified matrix has been reducedto an nx(n+1) matrix with all non-zero rows. If so, this means that at least one row in the matrix was a linear combination of other rows, thus the matrix actually is solvable. Backsubstitution is then performed on the matrix and the solution is printed. Otherwise, if the matrix has more equations than variables, this means that the matrix is inconsistent and contains no solutions. Otherwise, if the matrix has more variables than equations, this means that the matrix has an infinite amount of solutions. In both these cases backward substitution is not performed. In the end, the L, U, and P factorization of the original matrix is printed. 
+
+Pointer swapping
+----------------
+If the matrix were to simply swap pointers instead of swapping the memory contents themselves, performance would be increased slightly, although due to the small example matrices provided, the performance increase was negligible. This is due to the different complexities associated with pointer swapping and memory content swapping. Swapping two rows' pointers is an O(1) time operation, while swapping two rows' memory contents is at least an O(n) time operation. However, as Gaussian Elimination is O(n^3)) time, this matters little. During the testing of the memory swap and pointer swap programs, the performance increase was seen to be around 0.001ms to 0.005ms increase, which is very small. On larger matrices this performance increase may be larger, however.
+
+Optimization
+------------
+One way to optimize Gaussian Elimination would be to unroll the loops that are within gaussian elimination. However, as good modern compilers often automatically unroll loops, this may or may not be of much use. Even so, this may reduce the chances of a cache miss slowing down the program. If during each for loop there is only one operation, a cache miss can cause the program to suspend for a large amount of time, in CPU time. This is unwanted behavior, thus by performing multiple operations within an iteration of a nested for loop, cache miss slowdowns can be reduced, as even if one operation results in a cache miss, other operations can continue to be performed. This must be performed carefully, however, as this can easily lead to segmentation faults if little error checking is performed.
+
+Another way to optimize Gaussian Elimination would be to declare certain variables as register variables, to let the compiler know that these variables will be used a lot and should be in faster access areas for faster access. A third optimization technique would be to provide all the parameters to functions as pointers, rather than the mixed-type as they are now. This would save time as the program doesn't have to create a copy of the non-pointer parameters every time they're passed.
+
+To further optimize solving for solutions to a matrix, modifications must be made to the algorithm, such as changing to the Jacobi method or the Gauss-Seidel method. However, since this assignment is purely Gauss Elimination, the core algorithm was left in place in favor of micro optimizations.
+
+Results
+-------
+The results are as follows for each provided test case:
+
+Test case 1:
+
+4 x 5 matrix
+7.802500+6.491200i 	0.964550+5.470100i 	5.752100+6.867800i 	8.211900+7.802300i 	5.085100+6.443200i 	
+3.897400+7.317200i 	1.319700+2.963200i 	0.597800+1.835100i 	0.154000+0.811200i 	5.107700+3.786100i 	
+2.416900+6.477500i 	9.420500+7.446900i 	2.347800+3.684800i 	0.430200+9.294300i 	8.176300+8.115800i 	
+4.039100+4.509200i 	9.561300+1.889600i 	3.531600+6.256200i 	1.689900+7.757100i 	7.948300+5.328300i 	
+New matrix: 
+7.802500+6.491200i 	0.964550+5.470100i 	5.752100+6.867800i 	8.211900+7.802300i 	5.085100+6.443200i 	
+0.591223+0.338322i 	10.700890+3.886525i 	1.270555+-2.321659i 	-1.785173+1.903139i 	7.349749+2.586034i 	
+0.756270+0.308632i 	0.143992+-0.189796i 	-1.375021+-4.558645i 	-3.752527+-8.236755i 	1.701449+-1.633535i 	
+0.590063+0.087021i 	0.739048+-0.401310i 	-0.834129+-0.091936i 	-4.293937+-6.899785i 	0.608255+0.916061i 	
+Pivot vector: 
+Answer is: 
+0.394982+-0.497909i
+0.564337+0.117950i
+0.479021+0.399187i
+-0.135248+0.003987i
+Lower triangular: 
+1.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	
+0.591223+0.338322i 	1.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	
+0.756270+0.308632i 	0.143992+-0.189796i 	1.000000+0.000000i 	0.000000+0.000000i 	
+0.590063+0.087021i 	0.739048+-0.401310i 	-0.834129+-0.091936i 	1.000000+0.000000i 	
+Upper triangular: 
+7.802500+6.491200i 	0.964550+5.470100i 	5.752100+6.867800i 	8.211900+7.802300i 	
+0.000000+0.000000i 	10.700890+3.886525i 	1.270555+-2.321659i 	-1.785173+1.903139i 	
+0.000000+0.000000i 	0.000000+0.000000i 	-1.375021+-4.558645i 	-3.752527+-8.236755i 	
+0.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	-4.293937+-6.899785i 	
+Permutation matrix: 
+1	0	0	0	
+0	0	1	0	
+0	1	0	0	
+0	0	0	1	
+Time per calculation = 0.280 msec.
+
+The answer appears to be correct as verified by Matlab.
+
+Test case 2:
+
+3 x 4 matrix
+6.333330+6.554780i 	4.750000+0.318328i 	7.000000+0.971318i 	1.000000+3.170990i 	
+2.416670+1.711870i 	1.875000+2.769230i 	3.250000+8.234580i 	2.000000+9.502220i 	
+2.838100+7.060460i 	2.314290+0.461714i 	4.857140+6.948290i 	0.000000+0.344461i 	
+New matrix: 
+6.333330+6.554780i 	4.750000+0.318328i 	7.000000+0.971318i 	1.000000+3.170990i 	
+0.319303+-0.060172i 	0.339155+2.953406i 	0.956431+8.345642i 	1.489890+8.549885i 	
+0.773439+0.314327i 	-0.475272+0.371874i 	3.306472+7.607520i 	4.110873+1.087032i 	
+Pivot vector: 
+Answer is: 
+-0.794728+0.892709i
+2.016351+0.966710i
+0.317730+-0.402274i
+Lower triangular: 
+1.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	
+0.319303+-0.060172i 	1.000000+0.000000i 	0.000000+0.000000i 	
+0.773439+0.314327i 	-0.475272+0.371874i 	1.000000+0.000000i 	
+Upper triangular: 
+6.333330+6.554780i 	4.750000+0.318328i 	7.000000+0.971318i 	
+0.000000+0.000000i 	0.339155+2.953406i 	0.956431+8.345642i 	
+0.000000+0.000000i 	0.000000+0.000000i 	3.306472+7.607520i 	
+Permutation matrix: 
+1	0	0	
+0	1	0	
+0	0	1	
+Time per calculation = 0.245 msec.
+
+The answer appears to be correct as verfiied by Matlab.
+
+Test case 3:
+
+6 x 6 matrix
+1.000000+0.000000i 	0.500000+0.000000i 	0.333333+0.000000i 	0.250000+0.000000i 	0.200000+0.000000i 	0.166667+0.000000i 	
+0.500000+0.000000i 	0.333333+0.000000i 	0.250000+0.000000i 	0.200000+0.000000i 	0.166667+0.000000i 	0.142857+0.000000i 	
+0.333333+0.000000i 	0.250000+0.000000i 	0.200000+0.000000i 	0.166667+0.000000i 	0.142857+0.000000i 	0.125000+0.000000i 	
+0.250000+0.000000i 	0.200000+0.000000i 	0.166667+0.000000i 	0.142857+0.000000i 	0.125000+0.000000i 	0.111111+0.000000i 	
+0.200000+0.000000i 	0.166667+0.000000i 	0.142857+0.000000i 	0.125000+0.000000i 	0.111111+0.000000i 	0.100000+0.000000i 	
+0.166667+0.000000i 	0.142857+0.000000i 	0.125000+0.000000i 	0.111111+0.000000i 	0.100000+0.000000i 	0.090909+0.000000i 	
+New matrix: 
+1.000000+0.000000i 	0.500000+0.000000i 	0.333333+0.000000i 	0.250000+0.000000i 	0.200000+0.000000i 	0.166667+0.000000i 	
+0.333333+0.000000i 	0.083334+0.000000i 	0.088889+0.000000i 	0.083334+0.000000i 	0.076190+0.000000i 	0.069444+0.000000i 	
+0.166667+0.000000i 	0.714281+0.000000i 	0.005953+0.000000i 	0.009921+0.000000i 	0.012245+0.000000i 	0.013528+0.000000i 	
+0.500000+0.000000i 	0.999994+0.000000i 	-0.933215+0.000000i 	0.000925+0.000000i 	0.001905+0.000000i 	0.002704+0.000000i 	
+0.250000+0.000000i 	0.899998+0.000000i 	0.560040+0.000000i 	-0.215345+0.000000i 	-0.000019+0.000000i 	-0.000050+0.000000i 	
+0.200000+0.000000i 	0.800002+0.000000i 	0.853220+0.000000i 	-0.142337+0.000000i 	0.967872+0.000000i 	0.000001+0.000000i 	
+Error: Matrix has no solutions. Outputting L, U, and P matrix as-is
+
+Pivot vector: 
+Lower triangular: 
+1.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	
+0.333333+0.000000i 	1.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	
+0.166667+0.000000i 	0.714281+0.000000i 	1.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	
+0.500000+0.000000i 	0.999994+0.000000i 	-0.933215+0.000000i 	1.000000+0.000000i 	0.000000+0.000000i 	
+0.250000+0.000000i 	0.899998+0.000000i 	0.560040+0.000000i 	-0.215345+0.000000i 	1.000000+0.000000i 	
+Upper triangular: 
+1.000000+0.000000i 	0.500000+0.000000i 	0.333333+0.000000i 	0.250000+0.000000i 	0.200000+0.000000i 	
+0.000000+0.000000i 	0.083334+0.000000i 	0.088889+0.000000i 	0.083334+0.000000i 	0.076190+0.000000i 	
+0.000000+0.000000i 	0.000000+0.000000i 	0.005953+0.000000i 	0.009921+0.000000i 	0.012245+0.000000i 	
+0.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	0.000925+0.000000i 	0.001905+0.000000i 	
+0.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	0.000000+0.000000i 	-0.000019+0.000000i 	
+Permutation matrix: 
+1	0	0	0	0	0	
+0	0	1	0	0	0	
+0	0	0	0	0	1	
+0	1	0	0	0	0	
+0	0	0	1	0	0	
+0	0	0	0	1	0	
+
+As triangular matrices always have to be square, a decision was made here to cut off the bottom row of the matrix in order to maintain square triangular matrices.
+
+Timing
+------
+Lab computers may be too fast to measure one iteration of gaussian elimination. Thus, it may be preferred to perform multiple iterations and calculate the average time

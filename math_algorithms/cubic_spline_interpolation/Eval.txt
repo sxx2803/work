@@ -1,0 +1,8 @@
+Points chosen:
+
+x1 = -1.0 (less than a)
+x2 = 0.0 (equal to a)
+x3 = 2.0 (equal to b)
+x4 = 1.0 (equal to 3rd x input)
+x5 = 1.8 (between 1.5 and 2.0)
+x6 = 3.0 (greater than b)

@@ -1,0 +1,28 @@
+Sicheng Xu
+
+Analysis
+
+Linked List Implementation Summary:
+
+- InitLinkedList initializes both the front and back pointers to NULL, and initializes the number of elements within the linked list to 0.
+
+- AddToFrontOfLinkedList first checks if the list is empty. The function will operate differently depending on if the list is empty or if the list already has elements in it. If the list is empty, set both the front and back pointers of the linked list to the new node. Likewise, the Next and previous fields of the new node will be NULL, as there are no other nodes present in the Linked List. If there are already previous node(s) in the linked list, the funciton will change the Previous field of the first node in the list to the new node, and then change the FrontPtr field of the linked list structure to the new node.
+
+
+- AddToFrontOfLinkedList first checks if the list is empty. The function will operate differently depending on if the list is empty or if the list already has elements in it. If the list is empty, set both the front and back pointers of the linked list to the new node. Likewise, the Next and previous fields of the new node will be NULL, as there are no other nodes present in the Linked List. If there are already previous node(s) in the linked list, the funciton will change the Next field of the last node in the list to the new node, and then change the BackPtr field of the linked list structure to the new node.
+
+- RemoveFromFrontOfLinkedList first checks if the list is empty. If the list is empty, NULL is returned. Next it checks for if the list has 1 element, and does an operation to accomodate for that. The next block statement is for all other cases. In general the operation will be use the FrontPtr of the list structure as the return node. The new head is then changed to the Next field of the return node. Pointers on the list structure and the new head are adjusted accordingly.
+
+- RemoveFromBackOfLinkedList first checks if the list is empty. If the list is empty, NULL is returned. Next it checks for if the list has 1 element, and does an operation to accomodate for that. The next block statement is for all other cases. In general the operation will be use the BackPtr of the list structure as the return node. The new tail is then changed to the Next field of the return node. Pointers on the list structure and the new tail are adjusted accordingly.
+
+- DestroyLinkedList first resets the number of elements in the linked list to 0. Next it goes through the linked list with each node, it frees the node's contents first and then frees the node itself. The function will quit when the current node becomes NULL, meaning it has reached the end of the list.
+
+Testing Summary:
+
+- In TestList, first the program processes the file and stores the data/words in the linked list. To print the first and last 6 elements of the list, it will call both RemoveFromFrontOfLinkedList and RemoveFromBackOfLinkedList 6 times each. The contents that were returned during each call are then printed to standard out. Between pop or pull, the program has to free memory allocated to the contents to assure that no memory leaks occur.
+
+- In TestSearch, there are two search functions as I was not sure what the paramters of the SearchList function had to be. One SearchList function takes in a string as a parameter. The function then progresses through the entire linked list to search for matching string contents, and if a matching node is found, that node's contents are returned immediately. If no matches were found, a NULL is returned, and the program that called the SearchList method has to check for a NULL return to ensure that the value they searched for is actually in the linked list.
+
+- In TestSearch, the other method to search the list with is the SearchList_Index, which takes in an index as a parameter. The indices start at 0 and go up to the length of the linked link minus 1. The function will progress through the linked list until it hits the specified index, and then return the node's contents at that index in the linked list.
+
+No makefiles were used and is thus not included.

@@ -1,0 +1,44 @@
+
+/* First and last 6 elements */
+Total number of words: 206573 
+A 
+A's 
+AOL 
+AOL's 
+Aaberg 
+Aaberg's 
+zymurgy 
+zymotic 
+zymosis's 
+zymosis 
+zymometer's 
+zymometer 
+
+/* Search linked list by characters */
+Total number of words: 206573 
+A 
+A's 
+AOL 
+AOL's 
+Aaberg 
+Aaberg's 
+zymurgy 
+zymotic 
+zymosis's 
+zymosis 
+zymometer's 
+zymometer 
+
+/* Search linked list by indices */
+A 
+A's 
+AOL 
+AOL's 
+Aaberg 
+Aaberg's 
+zymurgy 
+zymotic 
+zymosis's 
+zymosis 
+zymometer's 
+zymometer 

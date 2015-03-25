@@ -1,0 +1,26 @@
+Analysis
+
+1. Bisection Method
+
+For brackets [-2.5, 2.5], root was found to be x = 1.99113694859. Number of iterations was on par for bisection method. For the bisection method, minimum iterations can be calculated to be N = log2((b-a)/e)
+For a tolerance of 1e-12, N is around 43. The program output that the function was evaluated 48 times, which makes sense as the function iterated 43 times, meaning minimum 44 calculations, and the function was evaluated two times at the start to check if a real root exists in the first place, and finally the function was evaluated twice for the initial f(a) and f(b) values. Termination condition was checking if the difference between the current point and the next iteration point is less than the tolerance number. If the difference is less than the tolerance number, that means a root was found and the program should print the root and terminate.
+
+2. Newton method
+
+For initial guess of x = +1.5 with a tolerance of 1e-12, the function was evaluated 7 times, the derivative was evaluated 7 times, and the function iterated 7 times. The root was found to be x = 1.99113694859. The performance of 7 iterations and function/derivative evaluations was much faster than the bisection's 43 iterations. This was to be expected as Newton's method, for root multiplicities of 1 as is the case of this function, has quadratic convergence compared to the linear convergence of bisection.
+
+For the initial guess of x = -1.5 with a tolerance of 1e-12, the function was evaluated 10 times, the derivative was evaluated 10 times, and the function iterated 10 times. The root was found to be x = 1.99113694859. The performance of 10 iterations and function/derivative evaluations was also much faster than the bisection's 43 iterations. This was to be expected as even though the starting guess was father from the first positive root of 1.99113694859, Newton method's quadratic convergence meant a faster convergence.
+
+The derivative for the function was found via WolframAlpha and hardcoded into the program. For a generic function f(x), a good approximation can be found by calculating the slope between two points very close to each other. If the function is known, however, the derivative can be calculated directly.
+
+The termination condition for both initial guesses was checking if the difference between the current iteration point and the next iteration point is less than the tolerance number. If the difference is less, that means a root was found and the program should print the root and terminate.
+
+3. Secant method
+
+For initial guesses of x0 = +1.5 and x1 = +2.0 with a tolerance of 1e-12, the function was evaluated 6 times and the program iterated 6 times. The second initial guess was chosen to bracket the root within the two initial guesses to prevent calculation oscillations and to better ensure a convergence. Another reason was to choose initial guesses that were close to the actual root. The root was found to be x = 1.99113694859. The secant method with these initial guesses performed 1 iteration faster than the Newton method with an initial guess of +1.5. 
+
+For an initial guess of x0 = -1.5 and x1 = +2.0 with a tolerance of 1e-12, the function was evaluated 7 times and the program iterated 7 times. The second initial guess was chosen to bracket the root within the two initial guesses to prevent calculation oscillations and to better ensure a convergence. The root was found to be the same as all other calculations, which was x = 1.99113694859. The problem experienced with the negative initial guess is that depending on the second initial guess provided, the function may converge on different roots. For example if x1 was provided as -5.0 or -4.0, the program would convergence to the negative root of -4.8763264458. As the function has multiple roots, this is to be expected as the method finds one root but root that it finds depends on the initial guesses provided.
+
+The secant method for both initial guesses was found to be faster in both the amount of function calculations and the number of iterations. This can probably be attributed to the superlinear convergence of the secant method and the initial guesses provided. The initial guesses provided proved to be good initial guesses close to the root as changing the initial guesses can easily increase the iterations and function calculation. In general, Newton's method was found to be more consistent in the number of iterations and calculations, while the secant method highly depends on the initial guesses provided.
+
+The termination condition for both initial guesses was checking if the difference between the current iteration point and the next iteration point is less than the tolerance number. If the difference is less, that means a root was found and the program should print the root and terminate.

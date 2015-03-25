@@ -1,0 +1,69 @@
+Sicheng Xu
+
+Analysis
+--------
+Validation of the spline calculation depended on built-in and third party Matlab functions used to calculate the splines of a data set. For the validation of the Not-a-knot spline interpolation, I used the built in spline() function in Matlab to verify my program against. For the validation of the clamped boundary spline interpolation, I also used the built in spline() function in Matlab to verify my program's output against. Since the spline() function in Matlab is overloaded depending on the input vectors, I was able to verify my Not-a-Knot implementation and clamped implementation easily. For the natural boundary spline interpolation, I used a third party Matlab natural spline interpolation function found on Matlab's File Exchange to verify my code against. While this is perhaps not the most accurate validation process, as user-created code is more error prone than official code, it gave a good sense on what is correct and what is not. Another way to verify the natural boundary conditions interpolation is by looking at the quadratic coefficients. Since c0 in a natural boundary spline is always 0, the first quadratic coefficient should always be 0.
+
+For a varying number of data points this is the expected program behavior:
+
+If there are less than 2 data points, the program will exit with an error message stating that there must be at least 2 data points, as interpolation cannot be performed on a single or no data point.
+
+If there are 2 data points, the program will simply calculate the line between the two points. While the Clamped and Natural boundary interpolation works for two points, the Not-a-Knot will not work, thus the program will revert back to linear interpolation.
+
+If there are 3 or more data points, the program functions as normal.
+
+Shown below is the output for the program given the Data.txt file as input.
+
+The output in sparameters.txt:
+
+Natural Boundary Results: 
+[0.000000, 0.500000] 0.500000 1.720584 0.000000 0.522776
+[0.500000, 1.000000] 1.425639 2.112666 0.784164 -0.297232
+[1.000000, 1.500000] 2.640859 2.673906 0.338316 -0.425888
+[1.500000, 2.000000] 4.009155 2.692806 -0.300516 0.200344
+Clamped Boundary Results: 
+[0.000000, 0.500000] 0.500000 1.500000 0.755699 -0.106286
+[0.500000, 1.000000] 1.425639 2.175984 0.596270 -0.174718
+[1.000000, 1.500000] 2.640859 2.641216 0.334193 -0.286882
+[1.500000, 2.000000] 4.009155 2.760248 -0.096130 -0.478194
+Not-a-Knot Results: 
+[0.000000, 0.500000] 0.500000 1.485452 0.807897 -0.152490
+[0.500000, 1.000000] 1.425639 2.178981 0.579162 -0.152490
+[1.000000, 1.500000] 2.640859 2.643776 0.350427 -0.329590
+[1.500000, 2.000000] 4.009155 2.747011 -0.143958 -0.329590
+
+These are the correct coefficients verified by Matlab.
+
+The spline evaluations:
+
+Points chosen:
+
+x1 = -1.0 (less than a)
+x2 = 0.0 (equal to a)
+x3 = 2.0 (equal to b)
+x4 = 1.0 (equal to 3rd x input)
+x5 = 1.8 (between 1.5 and 2.0)
+x6 = 3.0 (greater than b)
+
+Natural Spline at x = -1.0 is -1.743360
+Natural Spline at x = 0.0 is 0.500000
+Natural Spline at x = 2.0 is 5.305472
+Natural Spline at x = 1.0 is 2.640859
+Natural Spline at x = 1.8 is 4.795360
+Natural Spline at x = 3.0 is 8.0483644
+
+Clamped Spline at x = -1.0 is -0.138015
+Clamped Spline at x = 0.0 is 0.500000
+Clamped Spline at x = 2.0 is 5.305472
+Clamped Spline at x = 1.0 is 2.640859
+Clamped Spline at x = 1.8 is 4.815666
+Clamped Spline at x = 3.0 is 6.319329
+
+Not-a-Knot Spline at x = -1.0 is -0.025065
+Not-a-Knot Spline at x = 0.0 is 0.500000
+Not-a-Knot Spline at x = 2.0 is 5.305472
+Not-a-Knot Spline at x = 1.0 is 2.640859
+Not-a-Knot Spline at x = 1.8 is 4.811403
+Not-a-Knot Spline at x = 3.0 is 6.693399
+
+These are also verified by Matlab.

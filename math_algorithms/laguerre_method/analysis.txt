@@ -1,0 +1,30 @@
+Sicheng Xu
+
+Analysis
+
+LaGuerre's Method Implementation Summary
+------o----------------------------------
+- Results appear to be correct, as verified against WolframAlpha's calculation of the polynomial roots.
+
+- The polynomial's value at x, the derivative's value at x, and the second derivative's value at x were all calculated simultaneously by using a series expansion of the polynomial. While multiplying and adding floating point numbers may cause inprecision in the answer, this step cannot be avoided unless one was to implement a function that actually differentiates a given function.
+
+- One iteration of LaGuerre's method is as follows:
+	1. The polynomial, its derivative, and its second derivative were all evaluated at an guess.
+	2. If the polynomial evaluated at the guess, the function quits immediately and the guess is returned. This is to avoid dividing by zero errors that may occur when G(x) and H(x) are being calculated.
+	3. Next, G(x), and H(x) were calculated. Precision may be lost in this area as the program is adding and multiplying floating point numbers.
+	4. The second part of the denominator was also calculated at this point. Precision may be lost in this area as the program is adding and multiplying floating point numbers.
+	5. To decide whether to add or subtract the second part of the denominator, the program checks which absolute value is greater. 
+	6. A(x) was calculated. Precision may be lost in this area as the program is dividing and subtracting floating point numbers.
+	7. A(x) was subtracted from the current X value.
+	8. If the absolute value of A(X) was less than the tolerance level, then a root has been found. The laguerre function then returns the root and exits.
+	9. If after every iteration A(x) was never found to be less than the tolerance level, that would mean one calculation turned out to be less than the machine epsilon for single precision floating point numbers. This is not a problem, as it simply means that the program has converged to a root. The laguerre method then returns the X value as is.
+
+- After one laguerre's iteration, a root should have been found. Next, the polynomial function must be deflated.
+
+- If the root found during the previous laguerre iteration turned out to be an imaginary root, the function is again deflated, this time against the conjugate of the imaginary root. This is to ensure that all roots are accounted for and the function reflects that.
+
+- The program then prints out all the roots
+
+- While the roots found were mostly right, sometimes the roots can be less than accurate. This is due to the laguerre method's A(x) value reaching below machine epsilon too fast. If the root converges too fast, sometimes the laguerre's method will get stuck on an A(x) value within the first few iterations, and continue on that way until max iterations has been reached.
+
+- There is an issue in my code where sometimes the function values in the array will get overwritten in the LaGuerre's method function, which should not happen as I never assign them in the function at all. I am not sure why this happens, as I'm not even allocating any memory in the laguerre function, or even in the evalPoly function. Thus, the offsets should stay the same and my function array should not be modified.
